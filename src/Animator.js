@@ -1,14 +1,9 @@
-import React, { Component } from 'react';
-import {
-  PanResponder,
-  Animated,
-  Dimensions,
-  StyleSheet
-} from 'react-native';
-import { DOWN_STATE, UP_STATE } from './BottomDrawer';
+import React, { Component } from "react";
+import { PanResponder, Animated, Dimensions, StyleSheet } from "react-native";
+import { DOWN_STATE, UP_STATE } from "./BottomDrawer";
 
-const SCREEN_HEIGHT = Dimensions.get('window').height;
-const SCREEN_WIDTH = Dimensions.get('window').width;
+const SCREEN_HEIGHT = Dimensions.get("window").height;
+const SCREEN_WIDTH = Dimensions.get("window").width;
 
 export default class Animator extends Component {
   constructor(props) {
@@ -17,7 +12,7 @@ export default class Animator extends Component {
     this.position = new Animated.ValueXY(this.props.currentPosition);
 
     this._panResponder = PanResponder.create({
-      onStartShouldSetPanResponder: () => true,
+      onStartShouldSetPanResponder: () => false,
       onPanResponderMove: this._handlePanResponderMove,
       onPanResponderRelease: this._handlePanResponderRelease
     });
@@ -40,7 +35,10 @@ export default class Animator extends Component {
         style={[
           { ...this.position.getLayout(), left: 0 },
           StyleSheet.flatten([
-            styles.animationContainer(this.props.containerHeight, this.props.backgroundColor),
+            styles.animationContainer(
+              this.props.containerHeight,
+              this.props.backgroundColor
+            ),
             styles.roundedEdges(this.props.roundedEdges),
             styles.shadow(this.props.shadow)
           ])
@@ -49,28 +47,36 @@ export default class Animator extends Component {
       >
         {this.props.children}
       </Animated.View>
-    )
+    );
   }
 
   _handlePanResponderMove = (e, gesture) => {
     if (this._swipeInBounds(gesture)) {
       this.position.setValue({ y: this.props.currentPosition.y + gesture.dy });
     } else {
-      this.position.setValue({ y: this.props.upPosition.y - this._calculateEase(gesture) });
+      this.position.setValue({
+        y: this.props.upPosition.y - this._calculateEase(gesture)
+      });
     }
-  }
+  };
 
   _handlePanResponderRelease = (e, gesture) => {
-    if (gesture.dy > this.props.toggleThreshold && this.props.currentPosition === this.props.upPosition) {
+    if (
+      gesture.dy > this.props.toggleThreshold &&
+      this.props.currentPosition === this.props.upPosition
+    ) {
       this._transitionTo(this.props.downPosition, this.props.onCollapsed);
       this.props.onDrawerStateSet(DOWN_STATE);
-    } else if (gesture.dy < -this.props.toggleThreshold && this.props.currentPosition === this.props.downPosition) {
+    } else if (
+      gesture.dy < -this.props.toggleThreshold &&
+      this.props.currentPosition === this.props.downPosition
+    ) {
       this._transitionTo(this.props.upPosition, this.props.onExpanded);
       this.props.onDrawerStateSet(UP_STATE);
     } else {
       this._resetPosition();
     }
-  }
+  };
 
   // returns true if the swipe is within the height of the drawer.
   _swipeInBounds(gesture) {
@@ -82,16 +88,16 @@ export default class Animator extends Component {
   }
 
   _transitionTo(position, callback) {
-    Animated.spring(this.position, {
+    Animated.timing(this.position, {
       toValue: position
-    }).start(() => this.props.onExpanded());
+    }).start(() => callback());
 
     this.props.setCurrentPosition(position);
     callback();
   }
 
   _resetPosition() {
-    Animated.spring(this.position, {
+    Animated.timing(this.position, {
       toValue: this.props.currentPosition
     }).start();
   }
@@ -100,21 +106,25 @@ export default class Animator extends Component {
 const styles = {
   animationContainer: (height, color) => ({
     width: SCREEN_WIDTH,
-    position: 'absolute',
+    position: "absolute",
     height: height + Math.sqrt(SCREEN_HEIGHT),
-    backgroundColor: color,
+    backgroundColor: color
   }),
   roundedEdges: rounded => {
-    return rounded == true && {
-      borderTopLeftRadius: 10,
-      borderTopRightRadius: 10,
-    }
+    return (
+      rounded == true && {
+        borderTopLeftRadius: 10,
+        borderTopRightRadius: 10
+      }
+    );
   },
   shadow: shadow => {
-    return shadow == true && {
-      shadowColor: '#CECDCD',
-      shadowRadius: 3,
-      shadowOpacity: 5,
-    }
-  },
-}
+    return (
+      shadow == true && {
+        shadowColor: "#CECDCD",
+        shadowRadius: 3,
+        shadowOpacity: 5
+      }
+    );
+  }
+};
