@@ -114,17 +114,23 @@ const styles = {
   roundedEdges: rounded => {
     return (
       rounded == true && {
-        borderTopLeftRadius: 10,
-        borderTopRightRadius: 10
+        borderTopLeftRadius: 20,
+        borderTopRightRadius: 20
       }
     );
   },
   shadow: shadow => {
     return (
       shadow == true && {
-        shadowColor: "#CECDCD",
-        shadowRadius: 3,
-        shadowOpacity: 5
+        shadowColor: "#000",
+        shadowOffset: {
+          width: 0,
+          height: 2,
+        },
+        shadowOpacity: 0.23,
+        shadowRadius: 2.62,
+
+        elevation: 4,
       }
     );
   }
