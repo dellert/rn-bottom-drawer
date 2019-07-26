@@ -24,6 +24,7 @@ export default class BottomDrawer extends Component {
      * the sum of those two components' heights.
      */
     offset: PropTypes.number,
+    topOffset: PropTypes.number,
 
     /**
      * Set to true to have the drawer start in up position.
@@ -70,6 +71,7 @@ export default class BottomDrawer extends Component {
   static defaultProps = {
     style: {},
     offset: 0,
+    topOffset: 0,
     startUp: true,
     backgroundColor: "#ffffff",
     roundedEdges: true,
@@ -162,7 +164,7 @@ export default class BottomDrawer extends Component {
 
         <View
           style={{
-            height: Math.sqrt(SCREEN_HEIGHT),
+            height: Math.sqrt(this.props.topOffset > 0 ? SCREEN_HEIGHT - this.props.topOffset : SCREEN_HEIGHT),
             backgroundColor: this.props.backgroundColor
           }}
         />
