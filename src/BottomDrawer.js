@@ -139,6 +139,7 @@ export default class BottomDrawer extends Component {
   render() {
     return (
       <Animator
+          style={this.props.style}
         currentPosition={this.state.currentPosition}
         setCurrentPosition={position => this.setCurrentPosition(position)}
         toggleThreshold={this.TOGGLE_THRESHOLD}
@@ -160,10 +161,10 @@ export default class BottomDrawer extends Component {
         {this.props.children}
 
         <View
-          style={[{
+          style={{
             height: Math.sqrt(SCREEN_HEIGHT),
             backgroundColor: this.props.backgroundColor
-          }, this.props.style]}
+          }}
         />
       </Animator>
     );

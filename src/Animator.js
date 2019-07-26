@@ -33,6 +33,7 @@ export default class Animator extends Component {
     return (
       <Animated.View
         style={[
+          this.props.style,
           { ...this.position.getLayout(), left: 0 },
           StyleSheet.flatten([
             styles.animationContainer(
