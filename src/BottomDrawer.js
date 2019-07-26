@@ -10,6 +10,9 @@ export const UP_STATE = 1;
 
 export default class BottomDrawer extends Component {
   static propTypes = {
+
+    style: PropTypes.object,
+
     /**
      * Height of the drawer.
      */
@@ -65,6 +68,7 @@ export default class BottomDrawer extends Component {
   };
 
   static defaultProps = {
+    style: {},
     offset: 0,
     startUp: true,
     backgroundColor: "#ffffff",
@@ -156,10 +160,10 @@ export default class BottomDrawer extends Component {
         {this.props.children}
 
         <View
-          style={{
+          style={[{
             height: Math.sqrt(SCREEN_HEIGHT),
             backgroundColor: this.props.backgroundColor
-          }}
+          }, this.props.style]}
         />
       </Animator>
     );
