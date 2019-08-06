@@ -1,9 +1,11 @@
 import React, {Component} from 'react';
 import {PanResponder, Animated, Dimensions, StyleSheet} from 'react-native';
-import {DOWN_STATE, UP_STATE} from "./BottomDrawer";
 
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 const SCREEN_WIDTH = Dimensions.get('window').width;
+
+export const DOWN_STATE = 0;
+export const UP_STATE = 1;
 
 export default class Animator extends Component {
     constructor(props) {

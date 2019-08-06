@@ -1,12 +1,9 @@
-import React, {Component} from "react";
-import PropTypes from "prop-types";
-import {View, Dimensions, Animated} from "react-native";
-
-import Animator from "./Animator";
+import React, {Component} from 'react';
+import PropTypes from 'prop-types';
+import {View, Dimensions, Animated} from 'react-native';
+import Animator, {DOWN_STATE, UP_STATE} from './Animator';
 
 const SCREEN_HEIGHT = Dimensions.get("window").height;
-export const DOWN_STATE = 0;
-export const UP_STATE = 1;
 
 export default class BottomDrawer extends Component {
     static propTypes = {
